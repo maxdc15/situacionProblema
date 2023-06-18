@@ -31,13 +31,13 @@ void Pelicula::mostrarDatos()
 }
 
 // Sobrecarga del operador << para mostrar los datos de la película 
-ostream &operator<<(ostream &output, const Pelicula &p)
+ostream &operator<<(ostream &output, const Pelicula *p)
 {
-    output << "ID: " << p.ID << endl;
-    output << "Nombre: " << p.nombre << endl;
-    output << "Genero: " << p.genero << endl;
-    output << "Calificacion: " << p.calificacion << endl;
-    output << "Duracion: " << p.minutos << endl;
-    output << "Fecha de estreno: " << p.fechaEstreno << endl;
+    output << "ID: " << p->ID << endl;
+    output << "Nombre: " << p->nombre << endl;
+    output << "Genero: " << p->genero << endl;
+    output << "Calificacion: " << p->calificacion << endl;
+    output << "Duracion: " << p->minutos << endl;
+    output << "Fecha de estreno: " << p->fechaEstreno << endl;
     return output;
 }

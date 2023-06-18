@@ -47,13 +47,13 @@ string Video::getFechaEstreno()
 }
 
 // Sobrecarga del operador <<
-ostream &operator<<(ostream &output, const Video &v)
+ostream &operator<<(ostream &output, const Video *v)
 {
-    output << "ID: " << v.ID << endl;
-    output << "Nombre: " << v.nombre << endl;
-    output << "Genero: " << v.genero << endl;
-    output << "Calificacion: " << v.calificacion << endl;
-    output << "Duracion: " << v.minutos << endl;
-    output << "Fecha de estreno: " << v.fechaEstreno << endl;
+    output << "ID: " << v->ID << endl;
+    output << "Nombre: " << v->nombre << endl;
+    output << "Genero: " << v->genero << endl;
+    output << "Calificacion: " << v->calificacion << endl;
+    output << "Duracion: " << v->minutos << endl;
+    output << "Fecha de estreno: " << v->fechaEstreno << endl;
     return output;
 }

@@ -28,7 +28,7 @@ public:
     string getFechaEstreno();
     virtual void setCalificacion(double calificacion) = 0; // Método virtual puro para modificar la calificación de la película o serie
     virtual void mostrarDatos() = 0; // Método virtual puro para mostrar los datos de la película o serie
-    friend ostream &operator<<(ostream &output, const Video &v); // Sobrecarga del operador <<
+    friend ostream &operator<<(ostream &output, const Video *v); // Sobrecarga del operador <<
     
 };
 #endif

@@ -194,24 +194,26 @@ void Sistema::calificarVideo(string nombre, double calificacionNueva)
                 return; // Terminar la ejecución del método
             }
         }
-        // Verificar si el video es de tipo Episodio
-        Episodio *episodio = dynamic_cast<Episodio*>(video); // Downcasting de Video a Episodio
-        if (episodio != nullptr) // Verificar si el downcasting fue exitoso
+        else
         {
-            // Verificar si el episodio es de la serie deseada
-            if (episodio->getNombreEpisodio() == nombre)
+            // Verificar si el video es de tipo Episodio
+            Episodio *episodio = dynamic_cast<Episodio*>(video); // Downcasting de Video a Episodio
+            if (episodio != nullptr) // Verificar si el downcasting fue exitoso
             {
-                // Cambiar la calificación del episodio
-                episodio->setCalificacion(calificacionNueva);
-                cout << "La calificacion del episodio " << nombre << " ha sido cambiada a " << calificacionNueva << endl;
-                return; // Terminar la ejecución del método
+                // Verificar si el episodio es de la serie deseada
+                if (episodio->getNombreEpisodio() == nombre)
+                {
+                    // Cambiar la calificación del episodio
+                    episodio->setCalificacion(calificacionNueva);
+                    cout << "La calificacion del episodio " << nombre << " ha sido cambiada a " << calificacionNueva << endl;
+                    return; // Terminar la ejecución del método
+                }
             }
-        } else {
-            cout << "No se encontro el video " << nombre << endl;
-            cout << "Intente escribir el nombre tal cual se muesta listado o un nombre valido" << endl;
-            return; // Terminar la ejecución del método
         }
     }
+    // Si no se encontró el video
+    cout << "No se encontro el video " << nombre << endl;
+    cout << "Intente escribir el nombre tal cual se muestra en el listado o un nombre válido" << endl;
 }
 
 void Sistema::calcularPromedioSerie(string nombreSerie)
@@ -278,6 +280,14 @@ void Sistema::ejecutar()
         cin >> opcion;
         cin.ignore(); // Ignorar el salto de línea que queda en el buffer de entrada
 
+        // Verificar que la opción ingresada sea válida y evitar bucles infinitos
+        while (!(cin >> opcion)) // Verificar que la entrada sea un número
+        {
+            cout << "Opcion invalida. Ingrese una de las opciones indicadas en el menu ";
+            cin.clear(); // Limpiar el estado de error de cin
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar el salto de línea que queda en el buffer de entrada
+        }
+
         // Ejecutar la opción seleccionada
         switch (opcion)
         {
@@ -313,10 +323,26 @@ void Sistema::ejecutar()
                 {
                     case 'a': // Calificacion mayor o igual a un valor dado
                     {
-                        double calificacionMinima;
                         cout << "Las calificaiones estan en una escala de 1 a 7" << endl;
-                        cout << "Ingrese la calificacion minima: ";
-                        cin >> calificacionMinima;
+                        double calificacionMinima;
+                        // verificar que la entrada sea un numero entre 1 y 7
+                        while (true)
+                        {
+                            cout << "Ingrese la calificacion minima: ";
+                            if (!(cin >> calificacionMinima)) 
+                            {
+                                cout << "La calificacion debe ser un valor numerico" << endl;
+                                cin.clear(); // Restaurar el estado de cin
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar la entrada inválida
+                            } else if (calificacionMinima < 1 || calificacionMinima > 7) 
+                            {
+                                cout << "La calificacion debe ser un valor entre 1 y 7" << endl;
+                            } else 
+                            {
+                                break; // Salir del bucle si la entrada es válida
+                            }
+                        }
+
                         cin.ignore(); // Ignorar el salto de línea que queda en el buffer de entrada
                         mostrarVideosCalificacion(calificacionMinima);
                         break;
@@ -415,15 +441,25 @@ void Sistema::ejecutar()
                     break; // Terminar la ejecución del case
                 }
 
+                cout << "Las calificaiones estan en una escala de 1 a 7" << endl;
                 double calificacionMinima;
-                cout << "Ingrese la calificacion minima: ";
-                cin >> calificacionMinima;
-                cin.ignore(); // Ignorar el salto de línea que queda en el buffer de entrada
-                if (calificacionMinima < 1 || calificacionMinima > 7)
-                        {
-                            cout << "La calificacion debe ser un valor entre 1 y 7" << endl;
-                            break;
-                        }
+                // verificar que la entrada sea un numero entre 1 y 7
+                while (true)
+                {
+                    cout << "Ingrese la calificacion minima: ";
+                    if (!(cin >> calificacionMinima)) 
+                    {
+                        cout << "La calificacion debe ser un valor numerico" << endl;
+                        cin.clear(); // Restaurar el estado de cin
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar la entrada inválida
+                    } else if (calificacionMinima < 1 || calificacionMinima > 7) 
+                    {
+                        cout << "La calificacion debe ser un valor entre 1 y 7" << endl;
+                    } else 
+                    {
+                        break; // Salir del bucle si la entrada es válida
+                    }
+                }
                 mostrarPeliculasCalificacion(calificacionMinima);
                 break;
             }
@@ -432,11 +468,12 @@ void Sistema::ejecutar()
 
             case 5: // Calificar un video
             {
-                // Verificar que se cargo el archivo de videos
+                // Verificar que se haya cargado el archivo de videos
                 if (videos.size() == 0)
                 {
                     cout << "Primero debe cargar el archivo de videos" << endl;
                     cout << "Presione ENTER para continuar...";
+                    cin.ignore(); // Ignorar cualquier entrada previa
                     cin.get(); // Esperar a que el usuario presione ENTER
                     break; // Terminar la ejecución del case
                 }
@@ -444,9 +481,9 @@ void Sistema::ejecutar()
                 char subopcion;
                 cout << "a) Pelicula." << endl;
                 cout << "b) Episodio." << endl;
-                cout << "Ingrese una opcion: " << endl;
+                cout << "Ingrese una opcion: ";
                 cin >> subopcion;
-                cin.ignore(); // Ignorar el salto de línea que queda en el buffer de entrada
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar el salto de línea y descartar la entrada adicional
 
                 switch (subopcion)
                 {
@@ -461,7 +498,6 @@ void Sistema::ejecutar()
                             if (pelicula != nullptr) // Verificar si el downcasting fue exitoso
                             {
                                 // Verificar si la pelicula ya se agregó al vector de peliculas
-                                // find retorna un iterador al elemento si lo encuentra, si no lo encuentra retorna un iterador al final del vector
                                 if (find(peliculas.begin(), peliculas.end(), pelicula->getNombre()) == peliculas.end())
                                 {
                                     // Agregar la pelicula al vector de peliculas
@@ -474,14 +510,30 @@ void Sistema::ejecutar()
                         string nombrePelicula;
                         cout << "Ingrese el nombre de la pelicula: ";
                         getline(cin, nombrePelicula);
-                        double calificacionNueva;
-                        cout << "Ingrese la nueva calificacion: ";
-                        cin >> calificacionNueva;
-                        if (calificacionNueva < 1 || calificacionNueva > 7)
+                        if (find(peliculas.begin(), peliculas.end(), nombrePelicula) == peliculas.end())
                         {
-                            cout << "La calificacion debe estar entre 1 y 7" << endl;
+                            cout << "No se encontro la pelicula " << nombrePelicula << endl;
                             break;
                         }
+                        double calificacionNueva;
+                        // Verificar que la calificacion sea un valor numerico entre 1 y 7
+                        while (true)
+                        {
+                            cout << "Ingrese la nueva calificacion: ";
+                            if(!(cin >> calificacionNueva))
+                            {
+                                cout << "La calificacion debe ser un valor numerico" << endl;
+                                cin.clear(); // Restaurar el estado de cin
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar el salto de línea y descartar la entrada adicional
+                            } else if (calificacionNueva < 1 || calificacionNueva > 7)
+                            {
+                                cout << "La calificacion debe ser un valor entre 1 y 7" << endl;
+                            } else
+                            {
+                                break; // Salir del ciclo while
+                            }
+                        }
+                        cin.ignore();
                         calificarVideo(nombrePelicula, calificacionNueva);
                         break;
                     }
@@ -497,7 +549,6 @@ void Sistema::ejecutar()
                             if (episodio != nullptr) // Verificar si el downcasting fue exitoso
                             {
                                 // Verificar si el episodio ya se agregó al vector de episodios
-                                // find retorna un iterador al elemento si lo encuentra, si no lo encuentra retorna un iterador al final del vector
                                 if (find(episodios.begin(), episodios.end(), episodio->getNombreEpisodio()) == episodios.end())
                                 {
                                     // Agregar el episodio al vector de episodios
@@ -510,14 +561,30 @@ void Sistema::ejecutar()
                         string nombreEpisodio;
                         cout << "Ingrese el nombre del episodio: ";
                         getline(cin, nombreEpisodio);
-                        double calificacionNueva;
-                        cout << "Ingrese la nueva calificacion: ";
-                        cin >> calificacionNueva;
-                        if (calificacionNueva < 1 || calificacionNueva > 7)
+                        if (find(episodios.begin(), episodios.end(), nombreEpisodio) == episodios.end())
                         {
-                            cout << "La calificacion debe ser un valor entre 1 y 7" << endl;
+                            cout << "No se encontro el episodio " << nombreEpisodio << endl;
                             break;
                         }
+                        double calificacionNueva; 
+                        // Verificar que la calificacion sea un valor numerico entre 1 y 7
+                        while (true)
+                        {
+                            cout << "Ingrese la nueva calificacion: ";
+                            if(!(cin >> calificacionNueva))
+                            {
+                                cout << "La calificacion debe ser un valor numerico" << endl;
+                                cin.clear(); // Restaurar el estado de cin
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar el salto de línea y descartar la entrada adicional
+                            } else if (calificacionNueva < 1 || calificacionNueva > 7)
+                            {
+                                cout << "La calificacion debe ser un valor entre 1 y 7" << endl;
+                            } else
+                            {
+                                break; // Salir del ciclo while
+                            }
+                        }
+                        cin.ignore();
                         calificarVideo(nombreEpisodio, calificacionNueva);
                         break;
                     }

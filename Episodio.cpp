@@ -43,16 +43,17 @@ void Episodio::mostrarDatos()
 }
 
 // Sobrecarga del operador << para mostrar los datos del episodio
-ostream &operator<<(ostream &output, const Episodio &e)
+ostream &operator<<(ostream &output, const Episodio *e)
 {
+    output << "Serie: " << e->nombre << endl;
     output << "Episodio: " << endl;
-    output << "ID episodio: " << e.IDepisodio << endl;
-    output << "Nombre episodio: " << e.nombreEpisodio << endl;
-    output << "Genero: " << e.genero << endl;
-    output << "Calificacion: " << e.calificacion << endl;
-    output << "Duracion: " << e.minutos << endl;
-    output << "Fecha de estreno: " << e.fechaEstreno << endl;
-    output << "Temporada: " << e.temporada << endl;
-    output << "Numero de episodio: " << e.numEpisodio << endl;
+    output << "ID episodio: " << e->IDepisodio << endl;
+    output << "Nombre episodio: " << e->nombreEpisodio << endl;
+    output << "Genero: " << e->genero << endl;
+    output << "Calificacion: " << e->calificacion << endl;
+    output << "Duracion: " << e->minutos << endl;
+    output << "Fecha de estreno: " << e->fechaEstreno << endl;
+    output << "Temporada: " << e->temporada << endl;
+    output << "Numero de episodio: " << e->numEpisodio << endl;
     return output;
 }

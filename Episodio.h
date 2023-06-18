@@ -23,7 +23,7 @@ public:
     string getNombreEpisodio();
     void setCalificacion(double calificacion); // Método para modificar la calificación del episodio (sobreescribe el método virtual puro de la clase Video)
     void mostrarDatos(); // Método para mostrar los datos del episodio (sobreescribe el método virtual puro de la clase Video)
-    friend ostream &operator<<(ostream &output, const Episodio &e); // Sobrecarga del operador <<
+    friend ostream &operator<<(ostream &output, const Episodio *e); // Sobrecarga del operador <<
 };
 
 #endif

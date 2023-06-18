@@ -14,6 +14,7 @@ Definición de clase Sistema
 #include<fstream>
 #include<sstream>
 #include<algorithm>
+#include<limits>
 using namespace std;
 
 class Sistema
@@ -26,7 +27,7 @@ private:
         void mostrarVideosGenero(string genero); // Método para mostrar los videos de un género dado
         void mostrarEpisodiosSerie(string nombreSerie); // Método para mostrar los episodios de una serie dada 
         void mostrarPeliculasCalificacion(double calificacionMinima); // Método para mostrar las películas con una calificación mínima dada
-        void calificarVideo(string nombre, double calificacionNueva); // Método para calificar un video dado
+        void calificarVideo(string nombre, double calificacionNueva); // Método para calificar un video dado con una calificación que se le pide al usuario
         void calcularPromedioSerie(string nombreSerie); // Método para calcular el promedio de calificación de una serie dada
 public:
         // No hay constructor porque no hay atributos privados en la clase Sistema sino que hay métodos privados

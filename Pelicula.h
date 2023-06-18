@@ -16,7 +16,7 @@ public:
     Pelicula(string ID, string nombre, string genero, double calificacion, int minutos, string fechaEstreno); // Constructor con parámetros
     void setCalificacion(double calificacion); // Método para modificar la calificación de la película (sobreescribe el método virtual puro de la clase Video)
     void mostrarDatos(); // Método para mostrar los datos de la película (sobreescribe el método virtual puro de la clase Video)
-    friend ostream &operator<<(ostream &output, const Pelicula &p); // Sobrecarga del operador <<
+    friend ostream &operator<<(ostream &output, const Pelicula *p); // Sobrecarga del operador <<
 };
 
 #endif
