@@ -84,7 +84,7 @@ void Sistema::cargarArchivo(string nombreArchivo)
 
 void Sistema::mostrarVideosCalificacion(double calificacionMinima)
 {
-    cout << "Videos con calificacion mayor o igual a " << calificacionMinima << endl;
+    cout << "Videos con calificacion mayor o igual a " << calificacionMinima << endl << endl;;
 
     // Recorrer el vector de videos
     for (Video *video : videos)
@@ -105,7 +105,7 @@ void Sistema::mostrarVideosCalificacion(double calificacionMinima)
 
 void Sistema::mostrarVideosGenero(string genero)
 {
-    cout << "Videos del genero " << genero << endl;
+    cout << "Videos del genero " << genero << endl << endl;
 
     // Recorrer el vector de videos
     for (Video *video : videos) 
@@ -116,7 +116,7 @@ void Sistema::mostrarVideosGenero(string genero)
             // Mostrar el video
             video->mostrarDatos();
             cout << endl;
-        }
+        } 
     }
     // Terminar la ejecución del método después de mostrar los videos que cumplen con la condición
     cout << "Presione ENTER para continuar...";
@@ -126,7 +126,7 @@ void Sistema::mostrarVideosGenero(string genero)
 
 void Sistema::mostrarEpisodiosSerie(string nombreSerie)
 {
-    cout << "Episodios de la serie " << nombreSerie << endl;
+    cout << "Episodios de la serie " << nombreSerie << endl << endl;;
 
     // Recorrer el vector de videos
     for (Video *video : videos)
@@ -152,7 +152,7 @@ void Sistema::mostrarEpisodiosSerie(string nombreSerie)
 
 void Sistema::mostrarPeliculasCalificacion(double calificacionMinima)
 {
-    cout << "Peliculas con calificacion mayor a " << calificacionMinima << endl;
+    cout << "Peliculas con calificacion mayor a " << calificacionMinima << endl << endl;;
 
     // Recorrer el vector de videos
     for (Video *video : videos)
@@ -190,7 +190,7 @@ void Sistema::calificarVideo(string nombre, double calificacionNueva)
             {
                 // Cambiar la calificación de la película
                 pelicula->setCalificacion(calificacionNueva);
-                cout << "La calificacion de la pelicula " << nombre << " ha sido cambiada a " << calificacionNueva << endl;
+                cout << "La calificacion de la pelicula " << nombre << " ha sido cambiada a " << calificacionNueva << endl << endl;;
                 return; // Terminar la ejecución del método
             }
         }
@@ -205,7 +205,7 @@ void Sistema::calificarVideo(string nombre, double calificacionNueva)
                 {
                     // Cambiar la calificación del episodio
                     episodio->setCalificacion(calificacionNueva);
-                    cout << "La calificacion del episodio " << nombre << " ha sido cambiada a " << calificacionNueva << endl;
+                    cout << "La calificacion del episodio " << nombre << " ha sido cambiada a " << calificacionNueva << endl << endl;;
                     return; // Terminar la ejecución del método
                 }
             }
@@ -246,7 +246,7 @@ void Sistema::calcularPromedioSerie(string nombreSerie)
         // Calcular el promedio de calificaciones
         double promedio = sumaCalificaciones / cantidadEpisodios;
         // Mostrar el promedio de calificaciones
-        cout << "El promedio de calificaciones de la serie " << nombreSerie << " es " << promedio << endl;
+        cout << "El promedio de calificaciones de la serie " << nombreSerie << " es " << promedio << endl << endl;
     }
     else
     {
@@ -279,7 +279,7 @@ void Sistema::ejecutar()
         cout << "Ingrese una opcion: "; 
         cin >> opcion;
         cin.ignore(); // Ignorar el salto de línea que queda en el buffer de entrada
-
+/*
         // Verificar que la opción ingresada sea válida y evitar bucles infinitos
         while (!(cin >> opcion)) // Verificar que la entrada sea un número
         {
@@ -287,17 +287,28 @@ void Sistema::ejecutar()
             cin.clear(); // Limpiar el estado de error de cin
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar el salto de línea que queda en el buffer de entrada
         }
+*/
 
         // Ejecutar la opción seleccionada
         switch (opcion)
         {
             case 1: // Cargar el archivo de datos en formato CSV
-            {
+            {   
+                cout << "El archivo por defecto es DatosPeliculas.csv al presionar Enter" << endl;
+                cout << "Si desea cambiarlo, ingrese el nombre del archivo: ";
                 string nombreArchivo;
-                cout << "Ingrese el nombre del archivo: ";
-                getline(cin, nombreArchivo);
+
+                // Esta parte de código se pudo implementar gracias al asesoramiento de mi compañero Carlos Alberto Zamudio Velázquez
+                if (cin.peek() == '\n') // Verificar si el usuario presionó ENTER
+                {
+                    nombreArchivo = "DatosPeliculas.csv"; // Nombre del archivo por defecto
+                }
+                else
+                {
+                    getline(cin, nombreArchivo); // Leer el nombre del archivo ingresado por el usuario
+                }
                 cargarArchivo(nombreArchivo);
-                break;
+                break; // Terminar la ejecución del case
             }
 
             //--------------------------------------------------------------
@@ -368,6 +379,13 @@ void Sistema::ejecutar()
                         string genero;
                         cout << "Ingrese el genero: ";
                         getline(cin, genero);
+                        if (find(generos.begin(), generos.end(), genero) == generos.end())
+                        {
+                            cout << "El genero ingresado no existe" << endl;
+                            cout << "Presione ENTER para continuar...";
+                            cin.get(); // Esperar a que el usuario presione ENTER
+                            break; // Terminar la ejecución del case
+                        }
                         mostrarVideosGenero(genero);
                         break;
                     }
@@ -552,9 +570,11 @@ void Sistema::ejecutar()
                                 if (find(episodios.begin(), episodios.end(), episodio->getNombreEpisodio()) == episodios.end())
                                 {
                                     // Agregar el episodio al vector de episodios
+                                    episodios.push_back(episodio->getNombre());
                                     episodios.push_back(episodio->getNombreEpisodio());
                                     // Mostrar el nombre del episodio
-                                    cout << episodio->getNombreEpisodio() << endl;
+                                    cout << "Serie: " << episodio->getNombre() << endl;
+                                    cout << "Episodio: " << episodio->getNombreEpisodio() << endl << endl;
                                 }
                             }
                         }

@@ -10,6 +10,7 @@ Main donde se puede probar la plataforma de streaming
 
 int main(int argc, char const *argv[])
 {
+    // Se crea un objeto de la clase Sistema para modelar la plataforma de streaming
     Sistema netflis;
     netflis.ejecutar();
     return 0;

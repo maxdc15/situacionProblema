@@ -30,7 +30,7 @@ private:
         void calificarVideo(string nombre, double calificacionNueva); // Método para calificar un video dado con una calificación que se le pide al usuario
         void calcularPromedioSerie(string nombreSerie); // Método para calcular el promedio de calificación de una serie dada
 public:
-        // No hay constructor porque no hay atributos privados en la clase Sistema sino que hay métodos privados
+        // No hay constructor porque no hay atributos privados (fuera del vector videos de tipo apuntadores de Video) en la clase Sistema sino que hay métodos privados
         void ejecutar(); // Método para ejecutar el programa
 };
 
