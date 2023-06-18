@@ -31,7 +31,7 @@ string Video::getGenero()
     return genero;
 }
 
-int Video::getCalificacion()
+double Video::getCalificacion()
 {
     return calificacion;
 }

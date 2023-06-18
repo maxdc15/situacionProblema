@@ -23,7 +23,7 @@ public:
     string getID(); 
     string getNombre();
     string getGenero();
-    int getCalificacion();
+    double getCalificacion();
     int getMinutos();
     string getFechaEstreno();
     virtual void setCalificacion(double calificacion) = 0; // Método virtual puro para modificar la calificación de la película o serie
