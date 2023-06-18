@@ -10,17 +10,20 @@ Definición de Clase Episodio
 #include<string>
 using namespace std;
 
-class Episodio : public Video
+class Episodio : public Video // Clase Episodio hereda de la clase Video
 {
 private:
-    string IDepisodio;
+    string IDepisodio; 
     string nombreEpisodio;
     int temporada;
     int numEpisodio;
 public:
+    // Constructor con parámetros
     Episodio(string ID, string nombre, string genero, double calificacion, int minutos, string fechaEstreno, string IDepisodio, string nombreEpisodio, int temporada, int numEpisodio);
-    void setCalificacion(double calificacion);
-    void mostrarDatos();
+    string getNombreEpisodio();
+    void setCalificacion(double calificacion); // Método para modificar la calificación del episodio (sobreescribe el método virtual puro de la clase Video)
+    void mostrarDatos(); // Método para mostrar los datos del episodio (sobreescribe el método virtual puro de la clase Video)
+    friend ostream &operator<<(ostream &output, const Episodio &e); // Sobrecarga del operador <<
 };
 
 #endif

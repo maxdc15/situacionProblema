@@ -5,6 +5,7 @@ Definición de métodos de la clase Video
 
 #include "Video.h"
 
+// Constructor 
 Video::Video(string ID, string nombre, string genero, double calificacion, int minutos, string fechaEstreno)
 {
     this->ID = ID;
@@ -43,4 +44,16 @@ int Video::getMinutos()
 string Video::getFechaEstreno()
 {
     return fechaEstreno;
+}
+
+// Sobrecarga del operador <<
+ostream &operator<<(ostream &output, const Video &v)
+{
+    output << "ID: " << v.ID << endl;
+    output << "Nombre: " << v.nombre << endl;
+    output << "Genero: " << v.genero << endl;
+    output << "Calificacion: " << v.calificacion << endl;
+    output << "Duracion: " << v.minutos << endl;
+    output << "Fecha de estreno: " << v.fechaEstreno << endl;
+    return output;
 }
